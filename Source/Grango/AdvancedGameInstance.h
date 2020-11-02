@@ -106,5 +106,5 @@ public:
     UTexture2D* GetNoiseColorMap(TArray<FFloat2DMatrix> _HeightMap);
 
 	UFUNCTION()
-    FLandMeshData GetLandMeshData(TArray<FFloat2DMatrix> _HeightMap, float HeightMapMultiply);	
+    FLandMeshData GetLandMeshData(TArray<FFloat2DMatrix> _HeightMap, UCurveFloat* CurveHeight);	
 };

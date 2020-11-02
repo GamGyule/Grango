@@ -19,7 +19,7 @@ void AGLandGenerator::BeginPlay()
 
 	auto* GGameInstance = Cast<UAdvancedGameInstance>(GetGameInstance());
 	TArray<FFloat2DMatrix> HeightMap = GGameInstance->GetNoiseMatrix(Width,Height,20,1,1,1,1);
-	FLandMeshData MeshData = GGameInstance->GetLandMeshData(HeightMap,MeshHeightMultiply);
+	FLandMeshData MeshData = GGameInstance->GetLandMeshData(HeightMap,HeightCurve);
 	UTexture2D* Texture = GGameInstance->GetNoiseColorMap(HeightMap);
 	CreateMesh(MeshData,Texture);
 }

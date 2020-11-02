@@ -133,7 +133,7 @@ UTexture2D* UAdvancedGameInstance::GetNoiseColorMap(TArray<FFloat2DMatrix> _Heig
     return ColorTexture;
 }
 
-FLandMeshData UAdvancedGameInstance::GetLandMeshData(TArray<FFloat2DMatrix> _HeightMap, float HeightMapMultiply)
+FLandMeshData UAdvancedGameInstance::GetLandMeshData(TArray<FFloat2DMatrix> _HeightMap, UCurveFloat* CurveHeight)
 {
     int Width = _HeightMap[0].arr.Num();
     int Height = _HeightMap.Num();
@@ -151,14 +151,9 @@ FLandMeshData UAdvancedGameInstance::GetLandMeshData(TArray<FFloat2DMatrix> _Hei
         for(int x = 0; x < Width; x++)
         {
             float HeightValue = _HeightMap[x].arr[y];
-            if(_HeightMap[x].arr[y] > 0.2f)
-            {
-                HeightValue = 1;
-                HeightValue *= HeightMapMultiply;
-            }
 
                 
-            MeshData.vertices[VertexIndex] = FVector(TopLeftX + (x*SizeX),TopLeftY - (y*SizeY),HeightValue);
+            MeshData.vertices[VertexIndex] = FVector(TopLeftX + (x*SizeX),TopLeftY - (y*SizeY),CurveHeight->GetFloatValue(HeightValue)*20);
             MeshData.uvs[VertexIndex] = FVector2D(x/(float)Width, y/(float)Height);
 
             if(x < Width-1 && y < Height-1)

@@ -32,6 +32,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	float MeshHeightMultiply = 13;
 
+	UPROPERTY(EditAnywhere)
+	UCurveFloat* HeightCurve;
+
 	UFUNCTION()
 	void CreateMesh(FLandMeshData MeshData, UTexture2D* Texture);
 
