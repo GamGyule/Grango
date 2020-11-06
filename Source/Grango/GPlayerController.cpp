@@ -29,9 +29,9 @@ void AGPlayerController::Tick(float DeltaSeconds)
     Super::Tick(DeltaSeconds);
     
     BuildSystem();
-    //UpdatePosition();
-    //AddChunk();
-    //RemoveChunk();
+    /*UpdatePosition();
+    AddChunk();
+    RemoveChunk();*/
 }
 
 void AGPlayerController::SetupInputComponent()
@@ -85,8 +85,8 @@ void AGPlayerController::OnMouseLeftClick()
 
 void AGPlayerController::OnTab()
 {
-    TestPerlin();
-    /*if(!GameUMG->MenuPanel->IsVisible())
+    /*TestPerlin();*/
+    if(!GameUMG->MenuPanel->IsVisible())
     {
         GameUMG->PanelVisible(GameUMG->MenuPanel,ESlateVisibility::Visible);
         GameUMG->MenuPanel->SetRenderOpacity(1);
@@ -94,7 +94,7 @@ void AGPlayerController::OnTab()
     {
         GameUMG->MenuPanel->SetRenderOpacity(0);
         GameUMG->PanelVisible(GameUMG->MenuPanel,ESlateVisibility::Hidden);
-    }*/
+    }
 }
 
 void AGPlayerController::OnEsc()
@@ -191,7 +191,6 @@ void AGPlayerController::Initialize()
 
 void AGPlayerController::AddChunk()
 {
-    
     for(int i = RenderRange*-1; i <= RenderRange; i++) // X
     {
         for(int j = RenderRange*-1; j <= RenderRange; j++) // Y

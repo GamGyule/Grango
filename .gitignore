@@ -6,5 +6,6 @@
 /Intermediate
 /Plugins
 /Build
+/Binaries
 *.sln
 *_BuiltData.uasset

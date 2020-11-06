@@ -55,7 +55,7 @@ TArray<FFloat2DMatrix> UAdvancedGameInstance::GetNoiseMatrix(int _MapWidth, int 
                 float sampleX = (x - halfWidth) / _Scale * frequency + _Seed;
                 float sampleY = (y - halfHeight) / _Scale * frequency + _Seed;
 
-                float perlinValue = FMath::PerlinNoise2D(FVector2D(sampleX,sampleY));
+                float perlinValue = FMath::PerlinNoise2D(FVector2D(sampleX,sampleY)) * 2 - 1;
                 noiseHeight += perlinValue * amplitude;
 
                 amplitude *= _Persistance;
@@ -137,11 +137,11 @@ FLandMeshData UAdvancedGameInstance::GetLandMeshData(TArray<FFloat2DMatrix> _Hei
 {
     int Width = _HeightMap[0].arr.Num();
     int Height = _HeightMap.Num();
-    float TopLeftX = (Width - 1) / -2.0f;
-    float TopLeftY = (Height - 1) / 2.0f;
+    float TopLeftX = (Width-1) / -20.0f + 3;
+    float TopLeftY = (Height-1) / 20.0f - 3;
 
-    int SizeX = 10;
-    int SizeY = 10;
+    int SizeX = 20;
+    int SizeY = 20;
 
     FLandMeshData MeshData = FLandMeshData(Width,Height);
     int VertexIndex = 0;
@@ -153,7 +153,7 @@ FLandMeshData UAdvancedGameInstance::GetLandMeshData(TArray<FFloat2DMatrix> _Hei
             float HeightValue = _HeightMap[x].arr[y];
 
                 
-            MeshData.vertices[VertexIndex] = FVector(TopLeftX + (x*SizeX),TopLeftY - (y*SizeY),CurveHeight->GetFloatValue(HeightValue)*20);
+            MeshData.vertices[VertexIndex] = FVector(TopLeftX + (x*SizeX),TopLeftY - (y*SizeY),CurveHeight->GetFloatValue(HeightValue)*30);
             MeshData.uvs[VertexIndex] = FVector2D(x/(float)Width, y/(float)Height);
 
             if(x < Width-1 && y < Height-1)
