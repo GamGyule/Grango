@@ -20,6 +20,8 @@ void UGGameWidget::NativeConstruct()
     PerInput->OnValueChanged.AddDynamic(this,&UGGameWidget::SpinValueUpdate);
     LacInput->OnValueChanged.AddDynamic(this,&UGGameWidget::SpinValueUpdate);
     SeedInput->OnValueChanged.AddDynamic(this,&UGGameWidget::SpinValueUpdate);
+    OffsetXInput->OnValueChanged.AddDynamic(this,&UGGameWidget::SpinValueUpdate);
+    OffsetYInput->OnValueChanged.AddDynamic(this,&UGGameWidget::SpinValueUpdate);
 }
 
 void UGGameWidget::BtnMakeOnClicked()

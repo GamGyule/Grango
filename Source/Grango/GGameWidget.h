@@ -47,6 +47,12 @@ public:
 
 	UPROPERTY(BlueprintReadWrite ,meta=(BindWidget))
 	USpinBox* SeedInput;
+
+	UPROPERTY(BlueprintReadWrite ,meta=(BindWidget))
+	USpinBox* OffsetXInput;
+
+	UPROPERTY(BlueprintReadWrite ,meta=(BindWidget))
+	USpinBox* OffsetYInput;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TArray<UPanelWidget*> OpenPanels;

@@ -16,9 +16,19 @@ AGLandGenerator::AGLandGenerator()
 void AGLandGenerator::BeginPlay()
 {
 	Super::BeginPlay();
+	CreateNoiseMap();
+}
 
+void AGLandGenerator::CreateNoiseMap()
+{
 	auto* GGameInstance = Cast<UAdvancedGameInstance>(GetGameInstance());
-	TArray<FFloat2DMatrix> HeightMap = GGameInstance->GetNoiseMatrix(Width,Height,50,1,1,1,1);
+	HeightCurve = GGameInstance->LandMeshCurve;
+	TArray<FFloat2DMatrix> HeightMap = GGameInstance->GetNoiseMatrix(Width,Height,Scale,1,1,0,1,Offset);
+
+	/*TArray<FFloat2DMatrix> NoiseMap = GGameInstance->GetNoiseMatrix(Width,Height,1,1,300,1,1,Offset);
+	TArray<FFloat2DMatrix> RadialMap = GGameInstance->GetRadialGradient(Width,Height);
+	TArray<FFloat2DMatrix> RadialHeightMap = GGameInstance->GetMixedRadialNoise(NoiseMap,RadialMap);*/
+	
 	FLandMeshData MeshData = GGameInstance->GetLandMeshData(HeightMap,HeightCurve);
 	UTexture2D* Texture = GGameInstance->GetNoiseColorMap(HeightMap);
 	CreateMesh(MeshData,Texture);
@@ -31,11 +41,11 @@ void AGLandGenerator::CreateMesh(FLandMeshData MeshData, UTexture2D* Texture)
 	LandMesh->SetCollisionConvexMeshes({MeshData.vertices});
 	LandMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	UMaterialInstanceDynamic* DynamicMaterial = UMaterialInstanceDynamic::Create(Material,this);
-	DynamicMaterial->SetTextureParameterValue(TEXT("Texture"),Texture);
+	//DynamicMaterial->SetTextureParameterValue(TEXT("Texture"),Texture);
 	LandMesh->SetMaterial(0,DynamicMaterial);
-	
-	
 }
+
+
 
 
 

@@ -72,6 +72,12 @@ struct FLandMeshData
 		triangles.Add(c);
 	}
 };
+UENUM()
+enum class ENormalizeMode
+{
+	Local,
+	Global
+};
 
 UCLASS()
 class GRANGO_API UAdvancedGameInstance : public UAdvancedFriendsGameInstance
@@ -91,13 +97,23 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (titleProperty = "TerrainType"))
 	TArray<FLandType> Regions;
 
+	UPROPERTY(EditAnywhere)
+	UCurveFloat* LandMeshCurve;
+
+	UPROPERTY()
+	ENormalizeMode normalizeMode = ENormalizeMode::Global;
+
 	FORCEINLINE void ScreenMsg(const FString& Msg)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, *Msg);
 	}
 
 	UFUNCTION()
-	TArray<FFloat2DMatrix> GetNoiseMatrix(int _MapWidth, int _MapHeight, float _Scale, float _Seed, int _Octaves, float _Persistance, float _Lacunarity);
+	TArray<FFloat2DMatrix> GetNoiseMatrix(int _MapWidth, int _MapHeight, float _Scale, float _Seed, int _Octaves, float _Persistance, float _Lacunarity, FVector2D _Offset);
+
+	UFUNCTION()
+	TArray<FFloat2DMatrix> GetRadialGradient(int _Width, int _Height);
+
 
 	UFUNCTION()
 	UTexture2D* GetNoiseHeightMap(TArray<FFloat2DMatrix> _HeightMap);
@@ -106,5 +122,8 @@ public:
     UTexture2D* GetNoiseColorMap(TArray<FFloat2DMatrix> _HeightMap);
 
 	UFUNCTION()
-    FLandMeshData GetLandMeshData(TArray<FFloat2DMatrix> _HeightMap, UCurveFloat* CurveHeight);	
+    FLandMeshData GetLandMeshData(TArray<FFloat2DMatrix> _HeightMap, UCurveFloat* CurveHeight);
+
+	UFUNCTION()
+	TArray<FFloat2DMatrix> GetMixedRadialNoise(TArray<FFloat2DMatrix> _Noise, TArray<FFloat2DMatrix> _Radial);
 };

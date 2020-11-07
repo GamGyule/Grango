@@ -85,8 +85,8 @@ void AGPlayerController::OnMouseLeftClick()
 
 void AGPlayerController::OnTab()
 {
-    /*TestPerlin();*/
-    if(!GameUMG->MenuPanel->IsVisible())
+    TestPerlin();
+    /*if(!GameUMG->MenuPanel->IsVisible())
     {
         GameUMG->PanelVisible(GameUMG->MenuPanel,ESlateVisibility::Visible);
         GameUMG->MenuPanel->SetRenderOpacity(1);
@@ -94,7 +94,7 @@ void AGPlayerController::OnTab()
     {
         GameUMG->MenuPanel->SetRenderOpacity(0);
         GameUMG->PanelVisible(GameUMG->MenuPanel,ESlateVisibility::Hidden);
-    }
+    }*/
 }
 
 void AGPlayerController::OnEsc()
@@ -252,8 +252,11 @@ void AGPlayerController::TestPerlin()
     float Persistance = GameUMG->PerInput->GetValue();
     float Lacunarity = GameUMG->LacInput->GetValue();
     float Seed = GameUMG->SeedInput->GetValue();
+    FVector2D Offset = FVector2D(GameUMG->OffsetXInput->GetValue(),GameUMG->OffsetYInput->GetValue());
     
-    TArray<FFloat2DMatrix> NoiseMap = GGameInstance->GetNoiseMatrix(x,y,Scales,Seed,Octaves,Persistance,Lacunarity);
+    TArray<FFloat2DMatrix> NoiseMap = GGameInstance->GetNoiseMatrix(x,y,Scales,Seed,Octaves,Persistance,Lacunarity,Offset);
+    /*TArray<FFloat2DMatrix> RadialMap = GGameInstance->GetRadialGradient(x,y);
+    TArray<FFloat2DMatrix> RadialHeightMap = GGameInstance->GetMixedRadialNoise(NoiseMap,RadialMap);*/
     
     UTexture2D* Texture = GGameInstance->GetNoiseColorMap(NoiseMap);
     GameUMG->NoiseImage->SetBrushFromTexture(Texture);

@@ -24,10 +24,16 @@ public:
 	UMaterialInterface* Material;
 
 	UPROPERTY(EditAnywhere)
-	int Width = 128;
+	int Width = 51;
 	
 	UPROPERTY(EditAnywhere)
-	int Height = 128;
+	int Height = 51;
+
+	UPROPERTY(EditAnywhere)
+	int Scale = 100;
+
+	UPROPERTY(EditAnywhere)
+	FVector2D Offset;
 
 	UPROPERTY(EditAnywhere)
 	float MeshHeightMultiply = 13;
@@ -37,6 +43,9 @@ public:
 
 	UFUNCTION()
 	void CreateMesh(FLandMeshData MeshData, UTexture2D* Texture);
+
+	UFUNCTION()
+	void CreateNoiseMap();
 
 	
 
