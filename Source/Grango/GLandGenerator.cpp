@@ -40,6 +40,7 @@ void AGLandGenerator::CreateMesh(FLandMeshData MeshData, UTexture2D* Texture)
 	LandMesh->CreateMeshSection(0,MeshData.vertices,MeshData.triangles,TArray<FVector>(),MeshData.uvs,TArray<FColor>(),TArray<FProcMeshTangent>(),true);
 	LandMesh->SetCollisionConvexMeshes({MeshData.vertices});
 	LandMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	LandMesh->SetCollisionProfileName(FName("Ground"));
 	UMaterialInstanceDynamic* DynamicMaterial = UMaterialInstanceDynamic::Create(Material,this);
 	//DynamicMaterial->SetTextureParameterValue(TEXT("Texture"),Texture);
 	LandMesh->SetMaterial(0,DynamicMaterial);

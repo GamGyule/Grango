@@ -16,11 +16,12 @@ void AGPlayerController::BeginPlay()
     GameUMG = CreateWidget<UGGameWidget>(GetWorld()->GetFirstPlayerController(),GameWidget);
     GameUMG->AddToViewport();
 
-    Grid = GetWorld()->SpawnActor<AGGrid>(GridClass,FVector(-75000,-75000,4),FRotator::ZeroRotator);
+    Grid = GetWorld()->SpawnActor<AGGrid>(GridClass,FVector(0,0,201),FRotator::ZeroRotator);
     Grid->SetActorHiddenInGame(true);
     Grid->LineProceduralMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
     Grid->MaterialInstance = GridMaterial;
-    Grid->InitGrid();    
+    Grid->InitGrid();
+
     
 }
 
@@ -57,8 +58,8 @@ void AGPlayerController::ShowGrid()
         AGrangoCharacter* GPlayerCharacter = Cast<AGrangoCharacter>(GetPawn());
         bIsBuild = true;
 
-        FVector GridPosition = FVector(FMath::FloorToInt(GPlayerCharacter->GetActorLocation().X/Grid->TileSize)*Grid->TileSize-3750,FMath::FloorToInt(GPlayerCharacter->GetActorLocation().Y/Grid->TileSize)*Grid->TileSize-3750,4);
-        //Grid->SetActorLocation(GridPosition);
+        FVector GridPosition = FVector(FMath::FloorToInt(GPlayerCharacter->GetActorLocation().X/Grid->TileSize)*Grid->TileSize-3750,FMath::FloorToInt(GPlayerCharacter->GetActorLocation().Y/Grid->TileSize)*Grid->TileSize-3750,201);
+        Grid->SetActorLocation(GridPosition);
         Grid->SetActorHiddenInGame(false);
         GameUMG->BuildHelpPanel->SetVisibility(ESlateVisibility::Visible);
     }else
@@ -85,8 +86,8 @@ void AGPlayerController::OnMouseLeftClick()
 
 void AGPlayerController::OnTab()
 {
-    TestPerlin();
-    /*if(!GameUMG->MenuPanel->IsVisible())
+    /*TestPerlin();*/
+    if(!GameUMG->MenuPanel->IsVisible())
     {
         GameUMG->PanelVisible(GameUMG->MenuPanel,ESlateVisibility::Visible);
         GameUMG->MenuPanel->SetRenderOpacity(1);
@@ -94,7 +95,7 @@ void AGPlayerController::OnTab()
     {
         GameUMG->MenuPanel->SetRenderOpacity(0);
         GameUMG->PanelVisible(GameUMG->MenuPanel,ESlateVisibility::Hidden);
-    }*/
+    }
 }
 
 void AGPlayerController::OnEsc()
@@ -133,9 +134,18 @@ void AGPlayerController::BuildSystem()
         ObjectLocationToGrid(HitLocation,NewPosition.X,NewPosition.Y,NewPosition.Z);
         if(IsValid(BuildObject))
         {
+            /*bool ObjectCanBuild = (HitLocation.Z >= 80)?true:false;
+            BuildObject->CanBuild(ObjectCanBuild);*/
+            if(HitLocation.Z < 200)
+            {
+                return;
+            }
+            
             BuildObject->SetActorLocation(NewPosition);
-            int x = FMath::FloorToInt((Grid->NumRows*NewPosition.X/Grid->GridWidth()));
-            int y = FMath::FloorToInt((Grid->NumColumns*NewPosition.Y/Grid->GridHeight()));
+            int r;
+            int c;
+            bool a;
+            Grid->LocationToTile(NewPosition,a,r,c);
             
         }
     }
@@ -145,14 +155,14 @@ void AGPlayerController::ObjectLocationToGrid(FVector Location, float& X, float&
 {
     X = (FMath::FloorToInt(Location.X/150)*150)+(Grid->TileSize/2);
     Y = (FMath::FloorToInt(Location.Y/150)*150)+(Grid->TileSize/2);
-    Z = 0.f;
+    Z = 200;
 }
 
 void AGPlayerController::UpdateCursorPosition()
 {
     TArray<TEnumAsByte<EObjectTypeQuery>> ObjectType;
     FHitResult hit;
-    ObjectType.Add(EObjectTypeQuery::ObjectTypeQuery1);
+    ObjectType.Add(EObjectTypeQuery::ObjectTypeQuery9);
     if(GetHitResultUnderCursorForObjects(ObjectType,true,hit))
     {
         HitLocation = hit.Location;
@@ -294,9 +304,4 @@ void AGPlayerController::TestPerlin()
     UTexture2D* HeightTexture;
     HeightTexture = FImageUtils::CreateTexture2D(x,y,heightColor,this,TEXT("NoiseTexture"),EObjectFlags::RF_Public|EObjectFlags::RF_Transient,FCreateTexture2DParameters());
     */
-
-    
-
-    
-    
 }

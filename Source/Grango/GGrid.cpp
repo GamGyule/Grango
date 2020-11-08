@@ -19,14 +19,16 @@ void AGGrid::LocationToTile(FVector Location, bool& Valid, int& Row, int& Column
 	//
 	//int x = FMath::FloorToInt((1000*(NewPosition.X)/(1000*150)));
 	//int y = FMath::FloorToInt((1000*(NewPosition.Y)/(1000*150)));
+	
+	Row = r;
+	Column = c;
 
-
-	if(TileValid(r,c))
+	/*if(TileValid(r,c))
 	{
 		Valid = TileValid(r,c);
 		Row = r;
 		Column = c;
-	}
+	}*/
 }
 
 void AGGrid::TileToLocation(FVector& Location, int Row, int Column)

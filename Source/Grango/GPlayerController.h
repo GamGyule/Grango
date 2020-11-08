@@ -33,7 +33,7 @@ public:
     UPROPERTY()
     AGGrid* Grid;
     
-    UPROPERTY(BlueprintReadOnly, Category = Build)
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Build)
     bool bIsBuild = false;
 
     UPROPERTY(BlueprintReadOnly, Category = Build)
@@ -97,6 +97,7 @@ public:
     
     UFUNCTION()
     void TestPerlin();
+
 
 protected:
     virtual void Tick(float DeltaSeconds) override;

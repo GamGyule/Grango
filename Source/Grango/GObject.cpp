@@ -38,6 +38,21 @@ void AGObject::OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 	GPlayerController->bCanBuild = true;
 }
 
+void AGObject::CanBuild(bool bCanBuild)
+{
+	if(bCanBuild)
+	{
+		GObjectMesh->SetScalarParameterValueOnMaterials("CanSpawn",1);
+		AGPlayerController* GPlayerController = Cast<AGPlayerController>(GetWorld()->GetFirstPlayerController());
+		GPlayerController->bCanBuild = true;
+	}else
+	{
+		GObjectMesh->SetScalarParameterValueOnMaterials("CanSpawn",0);
+		AGPlayerController* GPlayerController = Cast<AGPlayerController>(GetWorld()->GetFirstPlayerController());
+		GPlayerController->bCanBuild = false;
+	}
+}
+
 void AGObject::SetObject()
 {
 }

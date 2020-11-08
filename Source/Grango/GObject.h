@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "GObject.generated.h"
 
+
 UCLASS()
 class GRANGO_API AGObject : public AActor
 {
@@ -15,6 +16,7 @@ public:
     // Sets default values for this actor's properties
     AGObject();
 
+    
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
     UStaticMeshComponent* GObjectMesh;
 
@@ -32,6 +34,10 @@ public:
     UFUNCTION()
     void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
+    UFUNCTION()
+    void CanBuild(bool bCanBuild);
+
+    
     UFUNCTION()
     virtual void SetObject();
 

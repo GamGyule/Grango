@@ -68,8 +68,8 @@ TArray<FFloat2DMatrix> UAdvancedGameInstance::GetNoiseMatrix(int _MapWidth, int 
             
             for(int i = 0; i < _Octaves; i++)
             {
-                float sampleX = (x - halfWidth + OctaveOffsets[i].X) / _Scale * frequency;
-                float sampleY = (y - halfHeight + OctaveOffsets[i].Y) / _Scale * frequency;
+                float sampleX = (x - halfWidth + OctaveOffsets[i].X) / (_Scale) * frequency;
+                float sampleY = (y - halfHeight + OctaveOffsets[i].Y) / (_Scale) * frequency;
 
                 float perlinValue = FMath::PerlinNoise2D(FVector2D(sampleX,sampleY)) * 2 - 1;
                 noiseHeight += perlinValue * amplitude;
@@ -99,7 +99,7 @@ TArray<FFloat2DMatrix> UAdvancedGameInstance::GetNoiseMatrix(int _MapWidth, int 
             }else
             {
                 float NormalizeHeight = (NoiseMap[x].arr[y] + 1)/(2*MaxPossibleHeight / 7.f);
-                NoiseMap[x].arr[y] = NormalizeHeight;
+                NoiseMap[x].arr[y] = NormalizeHeight + 2;
             }
             
         }
@@ -181,8 +181,8 @@ UTexture2D* UAdvancedGameInstance::GetNoiseColorMap(TArray<FFloat2DMatrix> _Heig
 
 FLandMeshData UAdvancedGameInstance::GetLandMeshData(TArray<FFloat2DMatrix> _HeightMap, UCurveFloat* CurveHeight)
 {
-    int SizeX = 50;
-    int SizeY = 50;
+    int SizeX = 150;
+    int SizeY = 150;
     
     int Width = _HeightMap[0].arr.Num();
     int Height = _HeightMap.Num();
@@ -199,8 +199,8 @@ FLandMeshData UAdvancedGameInstance::GetLandMeshData(TArray<FFloat2DMatrix> _Hei
         {
             float HeightValue = _HeightMap[x].arr[y];
 
-                
-            MeshData.vertices[VertexIndex] = FVector(TopLeftX + (x*SizeX),TopLeftY - (y*SizeY),CurveHeight->GetFloatValue(HeightValue)*100);
+
+            MeshData.vertices[VertexIndex] = FVector(TopLeftX + (x*SizeX),TopLeftY - (y*SizeY),CurveHeight->GetFloatValue(HeightValue)*200);
             MeshData.uvs[VertexIndex] = FVector2D(x/(float)Width, y/(float)Height);
 
             if(x < Width-1 && y < Height-1)

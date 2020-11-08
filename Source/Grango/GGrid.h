@@ -24,9 +24,9 @@ public:
 	UMaterialInterface* MaterialInstance;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	int NumRows = 1000;
+	int NumRows = 50;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	int NumColumns = 1000;
+	int NumColumns = 50;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float TileSize = 150;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
