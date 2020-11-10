@@ -5,6 +5,7 @@
 
 
 #include "EdGraphSchema_K2.h"
+#include "GObject.h"
 #include "ImageUtils.h"
 
 
@@ -13,10 +14,10 @@ FObjectDataStruct UAdvancedGameInstance::GObjectData(FString GObjectName)
     return *(GObjectDataTable->FindRow<FObjectDataStruct>(FName(GObjectName),TEXT("")));
 }
 
-AActor* UAdvancedGameInstance::SpawnGObject(FString GObjectName)
+AGObject* UAdvancedGameInstance::SpawnGObject(FString GObjectName)
 {
     FObjectDataStruct row = GObjectData(GObjectName);
-    AActor* result = GetWorld()->SpawnActor<AActor>(row.ObjectActor,FVector::ZeroVector,FRotator::ZeroRotator);
+    AGObject* result = GetWorld()->SpawnActor<AGObject>(row.ObjectActor,FVector::ZeroVector,FRotator::ZeroRotator);
     return result;
 }
 
@@ -99,7 +100,7 @@ TArray<FFloat2DMatrix> UAdvancedGameInstance::GetNoiseMatrix(int _MapWidth, int 
             }else
             {
                 float NormalizeHeight = (NoiseMap[x].arr[y] + 1)/(2*MaxPossibleHeight / 7.f);
-                NoiseMap[x].arr[y] = NormalizeHeight + 2;
+                NoiseMap[x].arr[y] = NormalizeHeight;
             }
             
         }

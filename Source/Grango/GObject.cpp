@@ -18,41 +18,42 @@ AGObject::AGObject()
 	
 }
 
-void AGObject::BuildSuccess()
-{
-	GObjectMesh->SetScalarParameterValueOnMaterials("Opacity",1);
-}
-
 void AGObject::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
                               int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	GObjectMesh->SetScalarParameterValueOnMaterials("CanSpawn",0);
+	bIsOverlap = true;
+	GObjectMesh->SetScalarParameterValueOnMaterials("CanBuild",0);
 	AGPlayerController* GPlayerController = Cast<AGPlayerController>(GetWorld()->GetFirstPlayerController());
 	GPlayerController->bCanBuild = false;
 }
 
 void AGObject::OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	GObjectMesh->SetScalarParameterValueOnMaterials("CanSpawn",1);
+	bIsOverlap = false;
+	GObjectMesh->SetScalarParameterValueOnMaterials("CanBuild",1);
 	AGPlayerController* GPlayerController = Cast<AGPlayerController>(GetWorld()->GetFirstPlayerController());
 	GPlayerController->bCanBuild = true;
 }
 
 void AGObject::CanBuild(bool bCanBuild)
 {
-	if(bCanBuild)
+	if(bCanBuild && !bIsOverlap)
 	{
-		GObjectMesh->SetScalarParameterValueOnMaterials("CanSpawn",1);
+		GObjectMesh->SetScalarParameterValueOnMaterials("CanBuild",1);
 		AGPlayerController* GPlayerController = Cast<AGPlayerController>(GetWorld()->GetFirstPlayerController());
 		GPlayerController->bCanBuild = true;
 	}else
 	{
-		GObjectMesh->SetScalarParameterValueOnMaterials("CanSpawn",0);
+		GObjectMesh->SetScalarParameterValueOnMaterials("CanBuild",0);
 		AGPlayerController* GPlayerController = Cast<AGPlayerController>(GetWorld()->GetFirstPlayerController());
 		GPlayerController->bCanBuild = false;
 	}
 }
 
-void AGObject::SetObject()
+void AGObject::BuildSuccess()
 {
+	GObjectMesh->SetMaterial(0,Material);
 }
+
+void AGObject::SetObject()
+{}

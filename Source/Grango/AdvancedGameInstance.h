@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AdvancedFriendsGameInstance.h"
+#include "GObject.h"
 #include "GObjectDataStruct.h"
 #include "ProceduralMeshComponent.h"
 #include "Engine/DataTable.h"
@@ -89,7 +90,7 @@ public:
 	FObjectDataStruct GObjectData(FString GObjectName);
 
 	UFUNCTION(BlueprintCallable)
-	AActor* SpawnGObject( FString GObjectName);
+	AGObject* SpawnGObject( FString GObjectName);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UDataTable* GObjectDataTable;

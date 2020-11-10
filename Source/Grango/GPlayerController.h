@@ -90,9 +90,6 @@ public:
     }
 
     UFUNCTION(BlueprintCallable)
-    void BuildSuccess();
-
-    UFUNCTION(BlueprintCallable)
     void ShowGrid();
     
     UFUNCTION()

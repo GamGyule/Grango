@@ -23,6 +23,9 @@ public:
 	UTexture2D* ObjectIcon;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UMaterialInterface* ObjectMaterial;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<AActor> ObjectActor;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

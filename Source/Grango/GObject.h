@@ -20,13 +20,19 @@ public:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
     UStaticMeshComponent* GObjectMesh;
 
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+    UTexture2D* ObjectTexture;
+
+    UPROPERTY()
+    UMaterialInterface* Material;
+
+    UPROPERTY()
+    bool bIsOverlap = false;
+
     FORCEINLINE void ScreenMsg(const FString& Msg)
     {
         GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, *Msg);
     }
-
-    UFUNCTION(BlueprintCallable)
-    void BuildSuccess();
 
     UFUNCTION()
     void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -36,6 +42,9 @@ public:
 
     UFUNCTION()
     void CanBuild(bool bCanBuild);
+
+    UFUNCTION()
+    void BuildSuccess();
 
     
     UFUNCTION()

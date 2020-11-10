@@ -45,11 +45,6 @@ void AGPlayerController::SetupInputComponent()
     InputComponent->BindAction("Esc",IE_Pressed,this,&AGPlayerController::OnEsc);
 }
 
-void AGPlayerController::BuildSuccess()
-{
-    BuildObject->BuildSuccess();
-}
-
 void AGPlayerController::ShowGrid()
 {
     
@@ -76,8 +71,9 @@ void AGPlayerController::OnMouseLeftClick()
     {
         if(bCanBuild)
         {
-            ShowGrid();
-            BuildSuccess();
+            //ShowGrid();
+            bIsBuild = false;
+            BuildObject->BuildSuccess();
             BuildObject->SetObject();
             BuildObject = nullptr;
         }
@@ -103,7 +99,7 @@ void AGPlayerController::OnEsc()
     if(bIsBuild)
     {
         bIsBuild = false;
-        ShowGrid();
+        //ShowGrid();
         GetWorld()->DestroyActor(BuildObject);
     }
     ScreenMsg(FString::FromInt(GameUMG->OpenPanels.Num()));
@@ -121,7 +117,8 @@ void AGPlayerController::OnMouseRightClick()
     if(IsValid(BuildObject))
     {
         GetWorld()->DestroyActor(BuildObject);
-        ShowGrid();
+        bIsBuild = false;
+        //ShowGrid();
     }
 }
 
@@ -134,13 +131,8 @@ void AGPlayerController::BuildSystem()
         ObjectLocationToGrid(HitLocation,NewPosition.X,NewPosition.Y,NewPosition.Z);
         if(IsValid(BuildObject))
         {
-            /*bool ObjectCanBuild = (HitLocation.Z >= 80)?true:false;
-            BuildObject->CanBuild(ObjectCanBuild);*/
-            if(HitLocation.Z < 200)
-            {
-                return;
-            }
-            
+            bool ObjectCanBuild = (HitLocation.Z < 199)?false:true;
+            BuildObject->CanBuild(ObjectCanBuild);
             BuildObject->SetActorLocation(NewPosition);
             int r;
             int c;
@@ -153,8 +145,9 @@ void AGPlayerController::BuildSystem()
 
 void AGPlayerController::ObjectLocationToGrid(FVector Location, float& X, float& Y, float& Z)
 {
-    X = (FMath::FloorToInt(Location.X/150)*150)+(Grid->TileSize/2);
-    Y = (FMath::FloorToInt(Location.Y/150)*150)+(Grid->TileSize/2);
+    int TileSize = 1;
+    X = (FMath::FloorToInt(Location.X/TileSize)*TileSize)+(TileSize/2);
+    Y = (FMath::FloorToInt(Location.Y/TileSize)*TileSize)+(TileSize/2);
     Z = 200;
 }
 

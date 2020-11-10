@@ -37,5 +37,16 @@ public:
 
 	UPROPERTY(BlueprintReadOnly)
 	FString GObjectRowName;
+
+	UPROPERTY()
+	UMaterialInterface* Material;
+
+	UFUNCTION()
+	void OnClicked_SlotBtn();
+
+	FORCEINLINE void ScreenMsg(const FString& Msg)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, *Msg);
+	}
 	
 };
